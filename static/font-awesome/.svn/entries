@@ -1,0 +1,40 @@
+8
+
+dir
+509547
+https://dev.corp.youdao.com/svn/outfox/incubator/Test/EAD/XmlAutomation/autotest/static/font-awesome
+https://dev.corp.youdao.com/svn/outfox
+
+
+
+2013-07-30T10:20:11.689681Z
+475837
+zhangyi
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+36a6777f-fe3c-0410-890b-904d6044f29d
+
+font
+dir
+
+less
+dir
+
+css
+dir
+
+scss
+dir
+

@@ -1,0 +1,52 @@
+8
+
+dir
+513896
+https://dev.corp.youdao.com/svn/outfox/incubator/Test/EAD/XmlAutomation/autotest/main/templatetags
+https://dev.corp.youdao.com/svn/outfox
+
+
+
+2014-01-03T04:10:00.956765Z
+508220
+luqy
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+36a6777f-fe3c-0410-890b-904d6044f29d
+
+__init__.py
+file
+
+
+
+
+2013-09-04T10:39:11.000000Z
+d41d8cd98f00b204e9800998ecf8427e
+2013-07-31T11:18:30.053068Z
+476326
+luqy
+
+platFilter.py
+file
+
+
+
+
+2014-01-02T11:31:49.000000Z
+658044dd78d6b0617e9d6300a5626994
+2014-01-03T04:10:00.956765Z
+508220
+luqy
+

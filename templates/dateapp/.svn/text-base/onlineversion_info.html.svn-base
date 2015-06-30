@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load platFilter %}
+{% load static %}
+{% block content %}
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <a class="brand" href="#">
+        	<i class="icon-dashboard"></i>
+            产品线上版本查看
+        </a>
+        <form class="navbar-search pull-left" id="changelist-search" action methon="get">
+        	<div class="input-append">
+                <ul class="dropdown-menu pull-right">
+                    <li><a href>Search By task</a></li>
+                </ul>
+                <input id="searchbar" type="text" name="_q_" value placeholder="Search task">
+                <button class="btn btn-primary" type="submit"><i class="icon-search icon-white"></i></button>
+            </div>
+        </form>
+        
+        <div class="navbar-btn pull-right hide-xs">
+			<!--a href="#addProductModal" data-toggle="modal" class="btn btn-primary"-->
+			<a onclick="alert('{{product}}')" class="btn btn-primary">
+				<i class="icon-plus icon-white"></i> 增加产品组
+    		</a>
+  		</div>
+        <script type="text/javascript">document.getElementById("searchbar").focus();</script>
+    </div>
+</br>
+    <div class="form-container row-fluid">
+    	<div class="column form-column main span2 form-horizontal ui-sortable">
+            {% for products in productsArray%}
+    		<div class="box well fieldset" id="box-1">
+                {% with indx=forloop.counter%}
+    			<h4 class="box-title"><i class="icon icon-wrench pull-right" data-toggle="modal" data-target="#add-product-form-{{indx}}"></i>
+                {{products.1}}</h4>
+    			<div class="box-content ">
+    				<table class="table  table-striped table-hover">
+    					<tbody>
+    						{%for product in products.0%}
+                            <form method="get" active="/ead_online_version/">
+    						<tr>
+                                {%if product%}
+    							<td class="active"><a href="/ead_online_version/{{product}}">{{product}}</a></td>
+                                <td>
+                                    <button class="icon-trash btn-link" type="submit" ></button>
+                                    <input type=hidden name="action" value="delete">
+                                    <input type=hidden name="platform" value="{{indx}}">
+                                    <input type=hidden name="product" value="{{product}}">
+                                </td>
+                                {%endif%}
+    						</tr>
+                            </form>
+    						{% endfor %}   
+    					</tbody>	
+    				</table>
+    			</div>
+    		</div>
+            <div id="add-product-form-{{indx}}" class="modal hide fade " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                <div class="modal-content">
+                    <form method="get" active="/ead_online_version/"class="box-form form-horizontal short_label widget-form exform rended">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">添加产品名称</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="div_id_title" class="form-group row">
+                                <label for="id_title" class="control-label">
+                                name
+                                </label>
+                                <div class="controls clearfix">
+                                    <input class="text-field form-control admintextinputwidget form-control" id="id_title" name="product" type="text" value="123">
+                                    <input type=hidden name="platform" value="{{indx}}">
+                                    <input type=hidden name="action" value="add">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger pull-left btn-remove">取消</button>
+                            <input class="btn btn-primary" type="submit" value="确定">
+                        </div>
+                    </form>
+                </div>
+            </div>
+                {% endwith%}
+            {% endfor%}
+    	</div>
+    	<div class="column form-column main span8 form-horizontal ui-sortable">
+            <table class="table table-bordered table-striped table-hover">
+                <caption>{{product}}</caption>
+                <thead>
+                    <tr>
+                        <th>产品名称</th>
+                        <th>序号</th>
+                        <th>上线时间</th>
+                        <th>svn路径</th>
+                        <th>版本号</th>
+                        <th>相关改动</th>
+                        <th>测试负责人</th>
+                        <th>ticket地址</th>
+
+                    </tr>                               
+                </thead>
+                <tbody>
+                    {%for version in version_arr%}
+                    <tr>
+                        <!--td>{{version|get_id}}</td-->
+                        <td>{{version.product}}</td>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{version.subDate4operateTime}}</td>
+                        <td><abbr title="{{version.svnPath}}"><a target="_blank" href="{{version.svnPath}}">{{version.svnPath|slice:"30"}}</a></abbr></td>
+                        <td>{{version.svnVersion}}</td>
+                        <td>{{version.productChanged}}</td>
+                        <td>{{version.functionalityBoss}}</td>
+                        <td><a target="_blank" href="http://ticket.corp.youdao.com/ticketMain!prepareConTicket.action?id={{version|get_id}}&amp;type={{version.type}}">Ticket地址</a></td>
+                        
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--div id="add-product-form-{{indx}}" class="modal hide fade " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+	    	<div class="modal-content">
+	    		<form method="get" active="/add_product/"class="box-form form-horizontal short_label widget-form exform rended">
+			        <div class="modal-header">
+			            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			                <h4 class="modal-title">添加上线产品名称</h4>
+			        </div>
+			        <div class="modal-body">
+			            <div id="div_id_title" class="form-group row">
+			            	<label for="id_title" class="control-label">
+							name
+							</label>
+							<div class="controls clearfix">
+								<input class="text-field form-control admintextinputwidget form-control" id="id_title" name="product" type="text" value="123"> 
+							</div>
+						</div>
+			        </div>
+			        <div class="modal-footer">
+			            <button class="btn btn-danger pull-left btn-remove">取消</button>
+			            <input class="btn btn-primary" type="submit" value="确定">
+			        </div>
+		        </form>
+	        </div>
+    </div-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+</div>
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block script  %}
+<script src="{% get_static_prefix %}js/newtask.js" ></script>
+{% endblock %}

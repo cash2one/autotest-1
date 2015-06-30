@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load static %}
+
+
+    {% block content %}
+        <!--ul class="breadcrumb">
+        <li><a href="">{% trans 'Home' %}</a>
+            <span class="divider">/</span>
+        <li>
+        <li class="active">task</li>
+        </ul-->
+    <legend>
+        <i class="icon-fire">
+            <!--sub class="icon-plus" /-->
+        </i>
+        首页-当前任务
+    </legend>
+
+    <!--div class="navbar">
+        <div class="navbar-inner">
+            <a class="brand" href="#">
+                <i class="icon-user"></i>
+                TASK
+            </a>
+            <ul class="nav">
+                <li class="dropdown filters">
+                    <a id="drop-filter" class="dropdown-toggle" role="button" data-taggle="drowndown" href="#">
+                        <i class="icon-filter"></i>
+                        Filter
+                        <b class="caret"></b>
+                    </a>
+                    <ul id="filter-menu" class="dropdown-menu" role="menu" aria-labelledby="drop-filter">
+                        <li class="dropdown-submenu open">
+                            <a>
+                                <i class="icon-filter muted"></i>
+                                time
+                            </a>
+                        </li>
+                        <li class="dropdown-submenu open">
+                            <a>
+                                <i class="icon-filter muted"></i>
+                                ing
+                            </a>
+                        </li>
+                        <li class="dropdown-submenu open">
+                            <a>
+                                <i class="icon-filter muted"></i>
+                                done
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-search pull-right" id="changelist-search" action methon="get">
+                <div class="input-append">
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href>Search By task</a></li>
+                    </ul>
+                    <input id="searchbar" type="text" name="_q_" value placeholder="Search task">
+                    <button class="btn btn-primary" type="submit"><i class="icon-search icon-white"></i></button>
+                </div>
+            </form>
+            <script type="text/javascript">document.getElementById("searchbar").focus();</script>
+        </div>
+    </div-->
+
+    <!--div class="btn-toolbar pull-right">
+        <div class="btn-group layout-btns" data-toggle="button-checkbox">
+            <button type="button" class="btn btn-small layout-full">
+                <i class="icon-fullscreen"></i>
+            </button>
+        </div>
+
+        <div class="btn-group layout-btns" data-toggle="buttons-radio">
+            <button type="button" class="btn btn-small layout-normal active">
+                <i class="icon-th-large"></i>
+            </button>
+            <button type="button" class="btn btn-small layout-condensed">
+                <i class="icon-th"></i>
+            </button>
+        </div>
+    </div-->
+
+    <div class="pagination pagination-small pagination-left">
+        <ul>
+          <li><span><b>{{tasknum}}</b> task</span></li>         
+        </ul>
+    </div>
+    <!--div class="pagination">
+        <ul>
+            <li><a href="#">&laquo;</a></li>
+            <li><a href="#">&lsaquo;</a></li>
+            <li><a class="active" href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">&rsaquo;</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div-->
+    {% load pagination_tags %} 
+
+    {% autopaginate taskset 20 %} 
+
+
+    {% paginate %}
+    <div >
+    	<table class="table table-bordered table-striped table-hover" >
+            <thead>
+            	<tr>
+                    <th scope="col" class="sortable" >
+                       <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" href="#">平台</a></div>
+                       <ul class="dropdown-menu" role="menu">
+                            <li><a href=""></a></li>
+                       </ul>
+                    </th>
+            		<th scope="col" class="sortable">
+                        <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >展示版本</a></div>
+                    </th>
+                    <th scope="col" class="sortable">
+                        <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >resin版本</a></div>
+                    </th>
+                    <th scope="col" class="sortable">
+                        <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >用例</a></div>
+                    </th>
+                    <th scope="col" class="sortable">
+                        <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >状态</a></div>
+                    </th>
+                    <th scope="col" class="sortable">
+                        <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >LDAP</a></div>
+                    </th>
+                    <th scope="col" class="sortable">
+                        <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >result</a></div>
+                    </th>
+            	</tr>
+            </thead>
+    	   
+            <tbody>
+                {% for task in taskset %}
+        		<tr  class="row1">
+                    <td>
+                        {{task.PLATFORM_ID}}
+                    </td>
+                    <td style="word-break:break-all">
+                        <a target="_blank" href="{{task.ENV_ID.IMPR_SVN}}">{{task.ENV_ID.IMPR_SVN}}</a>
+                    </td>
+        			<td style="word-break:break-all">
+        				<a target="_blank" href="{{task.ENV_ID.RESIN_SVN}}">{{task.ENV_ID.RESIN_SVN}}</a>
+        			</td>
+        			<td>
+        				{{task.USER_CASES}}
+        			</td>
+                    <td>
+                        {{task.STATUS}}
+                    </td>
+                    <td>
+                        {{task.LDAP}}
+                    </td>
+                    <td>
+                        {{task.RESULT}}
+                    </td>
+        		</tr>
+                {% endfor %}
+            </tbody>
+   		
+    	</table>
+    </div>
+	
+    {% endblock %}
+
+
+
+
+    {% block messages %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert{% if message.tags %} alert-{{ message.tags }}{% endif %}">
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+        {{ message|safe }}
+        </div>
+        {% endfor %}
+        {% endif %}
+    {% endblock messages %}
+
+    {% block script  %}
+        <script src="{% get_static_prefix %}js/index.js" ></script>
+    {% endblock %}
+
+  

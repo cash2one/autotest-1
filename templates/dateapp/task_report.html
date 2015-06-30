@@ -1,0 +1,48 @@
+    {% extends "base.html" %}
+    {% load platFilter %}
+    {% load i18n %}
+    {% load url from future %}
+    {% block title %}我的测试报告{% endblock %}
+    {% block content %}
+    <legend><i class="icon-file"></i>测试报告</legend>
+    <h4> 测试项目: {{ newestTask.PLATFORM_ID.PLATFORM_NAME }}</h4>
+    <h4> 测试时间: {{ newestTask.TIME}} </h4>
+    <h4> 测试执行人：{{ newestTask.LDAP}} </h4>
+    <h4> 测试版本: {{ newestTask.ENV_ID.IMPR_SVN }} </h4>
+    <h4> 测试持续时间: {{ execTime}} </h4>
+    <h4> 测试结果: {{ task_result|key:newestTask.RESULT}} </h4>
+    <br>
+    <br>
+    <br>
+    <h3 style='color:Brown'>测试用例</h3>
+    <hr>
+    <table class="table table-bordered table-striped table-hover">
+    <tr>
+        <th> TestSuite </th>
+        <th> TestCase </th>
+        <th> 用例描述 </th>
+        <th> 测试结果 </th>
+        <th> 失败原因 </th>
+    </tr>
+    {% for res in resList %}
+    <tr>
+        <td>{{ res.suiteId }}</td>
+        <td>{{ res.case.id }}</td>
+        <td><a href='../case_edit?id={{res.case.id}}'>{{res.case.case_name}}</a></td>
+        <td>{{ res.result }}</td>
+        <td>{{ res.comment }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+    {% endblock %}
+    {% block breadcrumbs %}
+        <ul class="breadcrumb">
+        <li><a href="">{% trans 'Home' %}</a>
+            <span class="divider">/</span>
+        <li>
+        <li class="active">new_task</li>
+        </ul>
+    
+
+    
+    {% endblock %}

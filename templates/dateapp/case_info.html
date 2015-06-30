@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% load url from future %}
+{% load platFilter %}
+{% block content %}
+<script src="{% get_static_prefix %}js/jquery.min.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/jquery-ui.min.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/caseEdit.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/bootstrap-paginator.js" type="text/javascript"></script>
+<link href="{% get_static_prefix %}css/bootstrap-select.css" media="screen" type="text/css" rel="stylesheet" charset="utf-8">
+<script src="{% get_static_prefix %}js/bootstrap-select.js" type="text/javascript"></script>
+  <legend>
+    <i class="icon-book"></i>
+    平台用例说明
+  </legend>
+   <!--div class="form-container row-fluid"-->
+      <div class="bs-docs-example">
+            <ul id="myTab" class="nav nav-tabs">
+              {% ifequal  platformId '1' %} <li class="active"> {% else %} <li> {% endifequal %} <a href="#caseInfoTab" data-toggle="tab" name="1">线下直销</a></li>
+              {% ifequal  platformId '2' %} <li class="active"> {% else %} <li> {% endifequal %}<a href="#caseInfoTab" data-toggle="tab" name="2">词典</a></li>
+              {% ifequal  platformId '5' %} <li class="active"> {% else %} <li> {% endifequal %}<a href="#caseInfoTab" data-toggle="tab" name="5">dsp</a></li>
+              {% ifequal  platformId '7' %} <li class="active"> {% else %} <li> {% endifequal %}<a href="#caseInfoTab" data-toggle="tab" name="7">转化跟踪前端</a></li>
+            </ul>
+            <p>
+            <div class="bs-docs-example">
+                  <div id="example"></div>
+                      <script type='text/javascript'>
+                         var options = {
+                            currentPage: {{pageNum}},
+                            totalPages: {{totalPage}},
+                            numberOfPages:5,
+                            onPageChanged: function(e,oldPage,newPage) {
+                                   platformId = {{platformId}}
+                                   $.get("../case_info",
+                                   {
+                                      part:1,
+                                      pageNum:newPage,
+                                      platformId:platformId,
+                                      searchText:"{{searchText}}",
+                                      searchType:"{{searchType}}"
+                                   },function(data){
+                                       $("div#caseTable").html(data)
+                                       $("div#myTabContent").empty()
+                                   } //end of function
+                                   ) //end of get 
+                            }
+                         }
+ 
+                         $('#example').bootstrapPaginator(options);
+                      </script><span style="font-family:'sans serif, tahoma, verdana, helvetica';"><span style="white-space:normal;"> </span></span>
+             </div>
+            </p>
+            <div id="myTabContent" class="tab-content">
+                <p>
+                <div class="btn-group">
+                       <a href="../case_edit?add=1&platformId={{platformId}}" class="btn btn-primary">
+                        <i class="icon-plus icon-white"></i>
+                         增加测试用例
+                       </a>
+                </div>
+                <button class="btn btn-primary" id="addXmlFromFile" name="{{platformId}}">导入数据源文件</button>
+                <button class="btn btn-primary" id="addFromFile" name="{{platformId}}">从文件导入用例</button> 
+                <div class="btn-group pull-right">
+                      <input type="text" id="search" >{{searchText}}</input>
+                      <a class="btn dropdown-toggle btn-primary" data-toggle="dropdown" href="#">查询<span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                         <li><a href="#suiteNameS" name="{{platformId}}">suiteName</a></li>
+                         <li><a href="#caseNameS" name="{{platformId}}">caseName</a></li>
+                      </ul>
+                </div>
+                </p>
+                <input type="hidden" id="platformId" value={{platformId}}></input>
+                <div class="tab-pane fade in active" id="offline">
+                    <table class="table table-bordered table-striped table-hover" width="100%" id="caseInfoTable">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="sortable">
+                                   <div class="dropdown pull-left"> <input type="checkbox" id="control-all" onclick="checkAll()"></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >测试用例说明 </a></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >测试集id </a></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >测试集名称 </a></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >数据源文件 </a></div>
+                                </th>
+                                <th scope="col" class="sortable"> 
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >命令 </a></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >参数 </a></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >日志类型 </a></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >匹配类型 </a></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >期望结果 </a></div>
+                                </th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        {% for case in testCase  %}
+                        <tr name="{{case.id}}">
+                            <td><input type="checkbox" onclick="clickCb()"/></td>
+                            <td><a href='../case_edit?id={{case.id}}'>{{case.case_name}}</a></td>
+                            <td>{{case.testsuitID}}</td>
+                            <td>{{case.Testsuit_name}}</td>
+                            <td><a href="#readXml{{case.id}}" role="button" data-toggle="modal" id="{{case.xml_file.id}}">{{case.xml_file.name}}</a> 
+                                <div id="readXml{{case.id}}" class="modal fade hiden" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                      <h3 id="myModalLabel">{{case.xml_file.name}}</h3>
+                                </div> 
+                                <div class="modal-body">
+                                      <textarea class="textarea-field admintextareawidget"  cols="40" rows="20" readonly="readonly" >{{case.xml_file.content}}</textarea>
+                                </div>
+                                <div class="modal-footer">
+                                      <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                                </div>
+                                </div>
+                            </td>                    
+                            <td>{{case.command}}</td>
+                            <td style="word-break:break-all; word-wrap:break-word;">{{case.parameter}}</td>
+                            <td>{{case.Log_path}}</td>
+                            <td>{{case.matchtype}}</td>
+                            <td style="word-break:break-all; word-wrap:break-word;">{{case.Expresult}}</td>
+                        </tr>
+                        {% endfor%}
+                    </tbody>
+                    </table>
+                </div> 
+            </div>
+       </div> 
+       <div id="caseTable" >
+       </div>
+       <div class="btn-group">
+            <a class="btn dropdown-toggle btn-primary" data-toggle="dropdown" href="#">操作<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+            <li><a href="#deleteCase">delete selected cases</a></li>
+            <li><a href="#copyCases">copy selected cases</a></li>
+            </ul>
+       </div>
+   <br>
+   <br>
+   <br>
+    
+    {% endblock %}

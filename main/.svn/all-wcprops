@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/outfox/!svn/ver/509546/incubator/Test/EAD/XmlAutomation/autotest/main
+END
+admin.py
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/outfox/!svn/ver/490552/incubator/Test/EAD/XmlAutomation/autotest/main/admin.py
+END
+datasource_update.py
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/outfox/!svn/ver/502864/incubator/Test/EAD/XmlAutomation/autotest/main/datasource_update.py
+END
+taskReport.py
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/outfox/!svn/ver/508220/incubator/Test/EAD/XmlAutomation/autotest/main/taskReport.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/outfox/!svn/ver/475837/incubator/Test/EAD/XmlAutomation/autotest/main/__init__.py
+END
+auth.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/outfox/!svn/ver/480527/incubator/Test/EAD/XmlAutomation/autotest/main/auth.py
+END
+datasource_add.py
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/outfox/!svn/ver/492038/incubator/Test/EAD/XmlAutomation/autotest/main/datasource_add.py
+END
+gl.py
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/outfox/!svn/ver/488068/incubator/Test/EAD/XmlAutomation/autotest/main/gl.py
+END
+tests.py
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/outfox/!svn/ver/475837/incubator/Test/EAD/XmlAutomation/autotest/main/tests.py
+END
+taskRenew.py
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/outfox/!svn/ver/475837/incubator/Test/EAD/XmlAutomation/autotest/main/taskRenew.py
+END
+onlineversion_info.py
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/outfox/!svn/ver/506283/incubator/Test/EAD/XmlAutomation/autotest/main/onlineversion_info.py
+END
+datasourceInfo.py
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/outfox/!svn/ver/502864/incubator/Test/EAD/XmlAutomation/autotest/main/datasourceInfo.py
+END
+index.py
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/outfox/!svn/ver/489785/incubator/Test/EAD/XmlAutomation/autotest/main/index.py
+END
+login.py
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/outfox/!svn/ver/490716/incubator/Test/EAD/XmlAutomation/autotest/main/login.py
+END
+taskNew.py
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/outfox/!svn/ver/509546/incubator/Test/EAD/XmlAutomation/autotest/main/taskNew.py
+END
+caseEdit.py
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/outfox/!svn/ver/571814/incubator/Test/EAD/XmlAutomation/autotest/main/caseEdit.py
+END
+models.py
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/outfox/!svn/ver/501453/incubator/Test/EAD/XmlAutomation/autotest/main/models.py
+END
+taskHistory.py
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/outfox/!svn/ver/502863/incubator/Test/EAD/XmlAutomation/autotest/main/taskHistory.py
+END
+urls.py
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/outfox/!svn/ver/475837/incubator/Test/EAD/XmlAutomation/autotest/main/urls.py
+END
+envCheck.py
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/outfox/!svn/ver/502687/incubator/Test/EAD/XmlAutomation/autotest/main/envCheck.py
+END
+caseInfo.py
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/outfox/!svn/ver/502680/incubator/Test/EAD/XmlAutomation/autotest/main/caseInfo.py
+END

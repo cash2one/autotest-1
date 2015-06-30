@@ -1,0 +1,229 @@
+{% load static %}
+{% include 'header.html' %}
+	<title>{% block title %}{% endblock %}</title>
+	<link href="{% get_static_prefix %}css/bootstrap.css" media="screen" type="text/css" rel="stylesheet" charset="utf-8">
+	<link href="{% get_static_prefix %}css/bootstrap-responsive.css" media="screen" type="text/css" rel="stylesheet" charset="utf-8">
+	<link href="{% get_static_prefix %}css/bootstrap-xadmin.css" media="screen" type="text/css" rel="stylesheet" charset="utf-8">
+    <link href="{% get_static_prefix %}font-awesome/css/font-awesome.css" type="text/css" rel="stylesheet" charset="utf-8">
+	<link href="{% get_static_prefix %}css/xadmin.main.css" media="screen" type="text/css" rel="stylesheet" charset="utf-8">
+	<link href="{% get_static_prefix %}css/xadmin.responsive.css" media="screen" type="text/css" rel="stylesheet" charset="utf-8">
+	<link href="{% get_static_prefix %}css/datepicker.css" media="screen" type="text/css" rel="stylesheet" charset="utf-8">
+	<link href="{% get_static_prefix %}css/bootstrap-timepicker.css" media="screen" type="text/css" rel="stylesheet" charset="utf-8">
+	<link href="{% get_static_prefix %}css/bootstrap-select.css" media="screen" type="text/css" rel="stylesheet" charset="utf-8">
+	<link href="{% get_static_prefix %}css/xadmin.plugin.formset.css" media="screen" type="text/css" rel="stylesheet" charset="utf-8">
+	<link href="{% get_static_prefix %}css/xadmin.modal.css" media="screen" type="text/css" rel="stylesheet" charset="utf-8">
+	<link href="{% get_static_prefix %}css/xadmin.form.css" media="screen" type="text/css" rel="stylesheet" charset="utf-8">
+	<!--link href="{% get_static_prefix %}css/jquery-ui.min.css" type="text/css" rel="stylesheet" media="all" /-->
+    <script src="{% get_static_prefix %}js/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="{% get_static_prefix %}js/jquery.ui.core.js" type="text/javascript"></script>
+    <script src="{% get_static_prefix %}js/jquery.ui.widget.js" type="text/javascript"></script>
+    <script src="{% get_static_prefix %}js/jquery.ui.mouse.js" type="text/javascript"></script>
+    <script src="{% get_static_prefix %}js/jquery.ui.sortable.js" type="text/javascript"></script>
+	<script src="{% get_static_prefix %}js/bootstrap.js" type="text/javascript"></script>
+    <script src="{% get_static_prefix %}js/bootstrap-transition.js" type="text/javascript"></script>
+	<script src="{% get_static_prefix %}js/bootstrap-select.js" type="text/javascript"></script>
+    <script src="{% get_static_prefix %}js/bootstrap-tab.js" type="text/javascript"></script>
+    <script src="{% get_static_prefix %}js/jquery-ui.min.js" type="text/javascript"></script>
+    <!--script src="{% get_static_prefix %}js/jquery.min.js" type="text/javascript"></script-->
+    <script src="{% get_static_prefix %}js/jquery.common.js" type="text/javascript"></script>
+    <script src="{% get_static_prefix %}js/bootstrap-button.js" type="text/javascript"></script>
+    <script src="{% get_static_prefix %}js/bootstrap-paginator.js" type="text/javascript"></script>
+
+    <link href="{% get_static_prefix %}js/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+	<!--script type="text/javascript" src="{% get_static_prefix %}js/uploadify/jquery-1.4.2.min.js" ></script-->
+	<!--script type="text/javascript" src="{% get_static_prefix %}js/uploadify/swfobject.js" ></script-->
+	<script type="text/javascript" src="{% get_static_prefix %}js/uploadify/jquery.uploadify.min.js"></script>
+
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="{% get_static_prefix %}js/html5shiv.js"></script>
+    <![endif]-->
+	{% block style %} {% endblock %}
+    <script src="{% get_static_prefix %}js/login.js" type="text/javascript"></script>
+
+    <!--link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.2/css/bootstrap.min.css"-->
+
+ </head>
+ <body style="padding-top: 70px;">
+	<!--head-->
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<a href="#" class="brand" >自动化回测平台</a>
+				<div class="nav-menu nav-collapse collapse">
+					<ul class="nav pull-right">
+						<!--li class="dropdown">
+							<a class="dropdown-toggle" role="button" href="#">
+								<strong> Welcome,admin</strong>
+								<b class="caret"> </b>
+							</a>
+							<ul id="g-account-menu" class="dropdown-menu" role="menu">
+								<li>
+									<a href="/account/password/">
+										<i class="icon-key"></i> 
+										Change Password
+									</a>
+								</li>
+								
+							</ul>
+						</li-->
+                        <li>
+                            {% if usr %}
+                            <a href="#" id='loginOk'>WelCome, {{ usr }} !</a>
+                            {% else %}
+                            <a href="#" id='loginOk'> </a>
+							{% endif %}
+                            <!--a href="/logout/">Log out</a-->
+                            </a>
+                        </li>
+						<li>
+                            {% if usr %}
+							<a id="logoutLink" >Log out</a>
+                            {% else %}
+							<a href="#login-panel" id="loginLink" role="button"  data-toggle="modal">Log in</a>
+                            {% endif %}
+						</li>
+					</ul>
+				</div>
+                
+        		<!--div class="nav-menu nav-collapse collapse">
+					<ul class="nav pull-right">
+						<li class="dropdown g-theme">
+							<a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+								<i class="icon-magic icon-white"></i> 
+								Themes 
+								<b class="caret"></b>
+							</a>
+							<ul id="g-theme-menu" class="dropdown-menu" role="menu">
+								<li class="active"><a data-css-href="/static/xadmin/css/themes/bootstrap-xadmin.css">Default Theme</a></li>
+								<li class=""><a data-css-href="http://bootswatch.com/amelia/bootstrap.min.css">Amelia</a></li>
+								<li><a data-css-href="http://bootswatch.com/cerulean/bootstrap.min.css">Cerulean</a></li>
+								<li><a data-css-href="http://bootswatch.com/cosmo/bootstrap.min.css">Cosmo</a></li>
+								<li><a data-css-href="http://bootswatch.com/cyborg/bootstrap.min.css">Cyborg</a></li>
+								<li><a data-css-href="http://bootswatch.com/flatly/bootstrap.min.css">Flatly</a></li>
+								<li><a data-css-href="http://bootswatch.com/journal/bootstrap.min.css">Journal</a></li>
+								<li><a data-css-href="http://bootswatch.com/readable/bootstrap.min.css">Readable</a></li>
+								<li><a data-css-href="http://bootswatch.com/simplex/bootstrap.min.css">Simplex</a></li>
+								<li><a data-css-href="http://bootswatch.com/slate/bootstrap.min.css">Slate</a></li>
+								<li><a data-css-href="http://bootswatch.com/spacelab/bootstrap.min.css">Spacelab</a></li>        
+								<li><a data-css-href="http://bootswatch.com/spruce/bootstrap.min.css">Spruce</a></li>        
+								<li><a data-css-href="http://bootswatch.com/superhero/bootstrap.min.css">Superhero</a></li>        
+								<li><a data-css-href="http://bootswatch.com/united/bootstrap.min.css">United</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div-->
+			</div>
+		</div>
+    </div>
+	<!--end head-->
+	
+    <div id="login-panel" role="dialog" class="modal hide fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">    
+        <div class="modal-header">
+               <h3 id="myModalTitle">用户登录</h3>
+        </div>
+        <div class="modal-body">
+               <table id="user_input_table">
+                   <tr>
+                         <td>用户名:</td>
+                         <td><input type="text" name="userName"></input></td>
+                   </tr>
+                   <tr>
+                         <td>密码:</td>
+                         <td><input type="password" name="passwd"></input></td>
+                   </tr>
+               </table>
+        </div>
+        <div class="modal-footer">
+               <button class="btn btn-primary" id="login" data-dismiss="modal" aria-hidden="true">登录</button>
+               <!--input type="submit" value="登录"></input-->
+               <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+        </div>
+	</div>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<!--left-->
+			<div id="left-side" class="span2 hidden-phone">
+				<div class="well sidebar-nav">
+					<ul class="nav nav-list hidden-tablet">       
+						<li class="nav-header ">                  
+							开始自动化测试                 
+						</li>
+						<li>
+							<a href="{% get_media_prefix %}/index">
+								<i class="icon-fire"></i>
+								首页
+							</a>
+						</li>               
+						<li>
+							<a href="{% get_media_prefix %}/new_task">
+								<i class="icon-laptop"></i>
+								创建新的测试
+							</a>
+						</li>                
+						<li class="nav-header ">
+						  测试用例
+						</li>                
+						<li>
+							<a href="{% get_media_prefix %}/case_info">
+								<i class="icon-book"></i>
+								平台自动用例说明
+							</a>
+						</li>
+						<li>
+							<a href="{% get_media_prefix %}/datasource_info">
+								<i class=" icon-folder-open"></i>
+								平台数据源文件说明
+							</a>
+						</li>               
+						<!--li>
+							<a href="../case_edit">
+								<i class="icon-pencil"></i>
+								测试用例编辑
+							</a>
+						</li-->               
+						<li class="nav-header ">                  
+						  环境                  
+						</li>                
+						<li>
+							<a href="{% get_media_prefix %}/env_check">
+								<i class="icon-wrench"></i>
+								我的测试环境
+							</a>
+						</li>          
+						<li class="nav-header ">
+							任务                  
+						</li>                
+						<li>
+							<a href="{% get_media_prefix %}/task_history">
+								<i class="icon-th-list"></i>
+								历史任务
+							</a>
+						</li>                
+						<li>
+							<a href="{% get_media_prefix %}/task_report">
+								<i class="icon-file"></i>
+								测试报告
+							</a>
+						</li>             
+					</ul>
+
+				</div><!--/.well -->
+			</div>
+			<!--end left-->
+			<!--right-->
+			<div id="content-block" class="span10">   
+				<!--ul class="breadcrumb">
+					<li><a href="/">首页</a> 
+						<span class="divider">/</span>
+					</li>
+					<li class="active">新的测试</li>
+				</ul-->
+				{% block content %}
+                {% endblock %}	
+			</div>
+		</div>
+	</div>
+	{% block script %}{% endblock %}
+ </body>
+</html>

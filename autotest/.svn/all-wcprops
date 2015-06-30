@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/outfox/!svn/ver/508218/incubator/Test/EAD/XmlAutomation/autotest/autotest
+END
+wsgi.py
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/outfox/!svn/ver/475837/incubator/Test/EAD/XmlAutomation/autotest/autotest/wsgi.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/outfox/!svn/ver/475837/incubator/Test/EAD/XmlAutomation/autotest/autotest/__init__.py
+END
+settings.py
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/outfox/!svn/ver/508218/incubator/Test/EAD/XmlAutomation/autotest/autotest/settings.py
+END
+urls.py
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/outfox/!svn/ver/508217/incubator/Test/EAD/XmlAutomation/autotest/autotest/urls.py
+END

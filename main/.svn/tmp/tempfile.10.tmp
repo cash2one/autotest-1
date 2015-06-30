@@ -1,0 +1,200 @@
+# Create your views here.
+# -*- coding: utf-8 -*-
+'''
+Created on 2013年7月26日
+
+@author: zhangyi
+'''
+
+from django.http import HttpResponse,HttpResponseRedirect
+from django.shortcuts import render_to_response,get_object_or_404,render
+from django.views.decorators.csrf import csrf_exempt
+from django.core.serializers.json import DjangoJSONEncoder
+from django.core import serializers
+
+from django.core.urlresolvers import reverse
+import json
+import auth
+import time
+#import datetime
+import os
+from main.models import TESTCASE
+from main.models import ENV
+from main.models import Task
+from main.models import Platform
+
+
+@csrf_exempt
+def new_task(request):
+    #本机调试用
+    #usr = auth.Auth().getUsr(request)
+
+    if not auth.Auth().isLogin(request):
+        return HttpResponseRedirect('/login')
+    else:
+        usr = auth.Auth().getUsr(request)
+    
+
+    taskcases_union = TESTCASE.objects.raw('SELECT DISTINCT(testsuitID) testsuitID,Testsuit_name,id FROM `TESTCASE` WHERE PLATFORM_ID_id=1  GROUP BY testsuitID')
+    taskcases_dict = TESTCASE.objects.raw('SELECT DISTINCT(testsuitID) testsuitID,Testsuit_name,id FROM `TESTCASE` WHERE PLATFORM_ID_id=2  GROUP BY testsuitID')
+    taskcases_mail = TESTCASE.objects.raw('SELECT DISTINCT(testsuitID) testsuitID,Testsuit_name,id FROM `TESTCASE` WHERE PLATFORM_ID_id=3  GROUP BY testsuitID')
+    taskcases_channel = TESTCASE.objects.raw('SELECT DISTINCT(testsuitID) testsuitID,Testsuit_name,id FROM `TESTCASE` WHERE PLATFORM_ID_id=4  GROUP BY testsuitID')
+    taskcases_dsp = TESTCASE.objects.raw('SELECT DISTINCT(testsuitID) testsuitID,Testsuit_name,id FROM `TESTCASE` WHERE PLATFORM_ID_id=5  GROUP BY testsuitID')
+    
+    taskcases_union_sum = len(list(taskcases_union))
+    taskcases_dict_sum = len(list(taskcases_dict))
+    taskcases_mail_sum = len(list(taskcases_mail))
+    taskcases_channel_sum = len(list(taskcases_channel))
+    taskcases_dsp_sum = len(list(taskcases_dsp))
+    
+    EVN_union = ENV.objects.filter(PLATFORM_ID=1,STATUS=2)
+    EVN_dict = ENV.objects.filter(PLATFORM_ID=2,STATUS=2)
+    EVN_mail = ENV.objects.filter(PLATFORM_ID=3,STATUS=2)
+    EVN_channel = ENV.objects.filter(PLATFORM_ID=4,STATUS=2)
+    EVN_dsp = ENV.objects.filter(PLATFORM_ID=5,STATUS=2)
+    
+    return render(request,'dateapp/new_task.html',{'taskcases_union':taskcases_union,'taskcases_dict':taskcases_dict,'taskcases_mail':taskcases_mail,'taskcases_channel':taskcases_channel,'taskcases_dsp':taskcases_dsp,
+                                                   'taskcases_union_sum':taskcases_union_sum,'taskcases_dict_sum':taskcases_dict_sum,'taskcases_mail_sum':taskcases_mail_sum,'taskcases_channel_sum':taskcases_channel_sum,'taskcases_dsp_sum':taskcases_dsp_sum,
+                                                   'EVN_union':EVN_union,'EVN_dict':EVN_dict,'EVN_mail':EVN_mail,'EVN_channel':EVN_channel,'EVN_dsp':EVN_dsp,'usr':usr})
+    
+    
+@csrf_exempt
+def start_task(request):
+    try:
+        if  request.is_ajax():
+            if request.method == "POST":
+                impr_svn = request.POST.get('item1',None)
+                resin_svn = request.POST.get('item2',None)
+                testsuit = request.POST.get('item3',None)
+                platform = request.POST.get('tag',None)
+                usr = auth.Auth().getUsr(request)
+                timenow = time.time()
+                
+                if platform == "Union":
+                    PLATFORM = Platform.objects.filter(PLATFORM_NAME="eadu")
+                    env = ENV.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",IMPR_SVN=impr_svn,RESIN_SVN=resin_svn,IMPR_PORT="0",RESIN_PORT="1")
+                    task = Task.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",RESULT="0",LOG_PATH="TEST",ENV_ID=env,USER_CASES=testsuit)
+                    #LOG_PATH,USER_CASES,TIME需要改，LDAP需要在机群上调试
+                elif platform == "Dict":
+                    PLATFORM = Platform.objects.filter(PLATFORM_NAME="eadd")
+                    env = ENV.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",IMPR_SVN=impr_svn,RESIN_SVN=resin_svn,IMPR_PORT="0",RESIN_PORT="1")
+                    task = Task.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",RESULT="0",LOG_PATH="TEST",ENV_ID=env,USER_CASES=testsuit)
+                elif platform =="Mail":
+                    PLATFORM = Platform.objects.filter(PLATFORM_NAME="eadm")
+                    env = ENV.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",IMPR_SVN=impr_svn,RESIN_SVN=resin_svn,IMPR_PORT="0",RESIN_PORT="1")
+                    task = Task.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",RESULT="0",LOG_PATH="TEST",ENV_ID=env,USER_CASES=testsuit)
+                elif platform == "Channel":
+                    PLATFORM = Platform.objects.filter(PLATFORM_NAME="eadc")
+                    env = ENV.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",IMPR_SVN=impr_svn,RESIN_SVN=resin_svn,IMPR_PORT="0",RESIN_PORT="1")
+                    task = Task.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",RESULT="0",LOG_PATH="TEST",ENV_ID=env,USER_CASES=testsuit)
+                elif platform == "Dspbs" :
+                    PLATFORM = Platform.objects.filter(PLATFORM_NAME="dsp")
+                    env = ENV.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",IMPR_SVN=impr_svn,RESIN_SVN=resin_svn,IMPR_PORT="0",RESIN_PORT="1")
+                    task = Task.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",RESULT="0",LOG_PATH="TEST",ENV_ID=env,USER_CASES=testsuit)
+                return HttpResponse(json.dumps({"status":"success","taskid":task.id}),mimetype='application/json')
+            else:
+                pass
+    except Exception,ex:
+        pass
+@csrf_exempt
+def restart_task(request):
+    try:
+        if request.is_ajax():
+            if request.method == "POST":
+                envid = request.POST.get('item1',None)
+                testsuit = request.POST.get('item2',None)
+                platform = request.POST.get('tag',None)
+                env = ENV.objects.filter(ENV_ID=envid)
+                usr = auth.Auth().getUsr(request)
+                timenow = time.time()
+                
+                if platform == "Union":
+                    PLATFORM = Platform.objects.filter(PLATFORM_NAME="eadu")       
+                    task = Task.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",RESULT="0",LOG_PATH="TEST",ENV_ID=env[0],USER_CASES=testsuit)
+                    #LOG_PATH,USER_CASES,TIME需要改，LDAP需要在机群上调试
+                elif platform == "Dict":
+                    PLATFORM = Platform.objects.filter(PLATFORM_NAME="eadd")
+                    task = Task.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",RESULT="0",LOG_PATH="TEST",ENV_ID=env[0],USER_CASES=testsuit)
+                elif platform =="Mail":
+                    PLATFORM = Platform.objects.filter(PLATFORM_NAME="eadm")
+                    task = Task.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",RESULT="0",LOG_PATH="TEST",ENV_ID=env,USER_CASES=testsuit)
+                elif platform == "Channel":
+                    PLATFORM = Platform.objects.filter(PLATFORM_NAME="eadc")
+                    task = Task.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",RESULT="0",LOG_PATH="TEST",ENV_ID=env,USER_CASES=testsuit)
+                elif platform == "Dspbs" :
+                    PLATFORM = Platform.objects.filter(PLATFORM_NAME="dsp")
+                    task = Task.objects.create(PLATFORM_ID=PLATFORM[0],LDAP=usr,TIME=timenow,STATUS="0",RESULT="0",LOG_PATH="TEST",ENV_ID=env,USER_CASES=testsuit)
+                return HttpResponse(json.dumps({"status":"success","taskid":task.id}),mimetype='application/json')
+            else:
+                pass
+    except Exception,ex:
+        pass
+                
+
+@csrf_exempt
+#status =0 日志文件存在 status =1 日志文件目前不存在 status =2不再判断日志文件是否存在
+#logstatus=0 日志文件有更新  logstatus = 1 日志文件没有更新 logstatus = 2 不再判断日志文件是否有更新
+#lastlogtime上次获取更新日志时间戳
+def read_log(request):
+    try:
+        if request.is_ajax():
+            if request.method == "POST":
+                taskid = request.POST.get('taskid',None)
+                line_begin = int(request.POST.get('line_begin',None))
+                lastlogtime = float(request.POST.get('lastlogtime',None))
+                #filepath = "/disk1/EadAutoTest/backend/logs/"+taskid
+                filepath = "/disk1/zhangyi/eadd_dict/impr_service/eadd-xss/logs/log"
+               # filepath="C:\\workspace\\autotest\\logs\\test.log"
+                if(os.path.isfile(filepath)):
+                    status = 0
+                    file = open(filepath,'rU')
+                    linecount=len(file.readlines())
+                    file.close()
+                elif(lastlogtime == 0):
+                    status =1
+                    lastlogtime = time.time()
+                    return HttpResponse(json.dumps({"status":status,"lastlogtime":lastlogtime},cls=DjangoJSONEncoder),mimetype='application/json')
+                elif(time.time()-lastlogtime>60):
+                    status = 2
+                    return HttpResponse(json.dumps({"status":status}),mimetype='application/json')
+                else:
+                    status =1
+                    return HttpResponse(json.dumps({"status":status}),mimetype='application/json')
+                lnum = 0
+                lines=[]
+                if (line_begin<=linecount):
+                    logstatus = 0
+                    with open(filepath,'rU') as fd:
+                        for line in fd:
+                            lnum+= 1
+                            if (lnum>=line_begin)&(lnum<=linecount):
+                                lines.append(line)
+                        line_begin = linecount+1
+                elif(time.time()-lastlogtime>10):
+                    logstatus = 2
+                else :
+                    logstatus = 1
+                    return HttpResponse(json.dumps({"logstatus":logstatus,"status":status}),mimetype='application/json')
+
+                '''                                
+                cmd1 = "more %s |wc -l"%(filepath);
+                (status,linecount) = commands.getstatusoutput(cmd1)
+                if(line_begin=<linecount):                
+                    cmd2 = "sed -n '%s,%s'p %s" % (line_begin,linecount,filepath)
+                    (status,lines) = commands.getstatusoutput(cmd2)
+                    logstatus = True
+                    line_begin = linecount
+                '''
+                lastlogtime = time.time()
+                return HttpResponse(json.dumps({"status":status,"logstatus":logstatus,"result":lines,"line_begin":line_begin,"lastlogtime":lastlogtime},cls=DjangoJSONEncoder),mimetype='application/json')
+
+
+    except Exception,ex:
+        return HttpResponse(json.dumps({'status':ex}),mimetype="application/json")
+
+
+        
+
+        
+        
+        

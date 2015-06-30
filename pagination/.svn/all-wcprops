@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/outfox/!svn/ver/489786/incubator/Test/EAD/XmlAutomation/autotest/pagination
+END
+middleware.py
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/outfox/!svn/ver/489786/incubator/Test/EAD/XmlAutomation/autotest/pagination/middleware.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/outfox/!svn/ver/489786/incubator/Test/EAD/XmlAutomation/autotest/pagination/__init__.py
+END
+tests.py
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/outfox/!svn/ver/489786/incubator/Test/EAD/XmlAutomation/autotest/pagination/tests.py
+END
+models.py
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/outfox/!svn/ver/489786/incubator/Test/EAD/XmlAutomation/autotest/pagination/models.py
+END
+paginator.py
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/outfox/!svn/ver/489786/incubator/Test/EAD/XmlAutomation/autotest/pagination/paginator.py
+END

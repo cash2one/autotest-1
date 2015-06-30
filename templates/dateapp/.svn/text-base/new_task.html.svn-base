@@ -1,0 +1,654 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <form class="exform rended" id="host_form">
+    <legend>
+        <i class="icon-laptop">
+            <sub class="icon-plus" />
+        </i>
+        创建测试任务
+    </legend>
+    <div class="form-container row-fluid">
+    <ul class="nav nav-tabs">
+        <li class="tab-pane active">
+            <a href="#union" data-toggle="tab">联盟 </a></li>
+        <li class="tab-pane">
+            <a href="#dict" data-toggle="tab">词典</a></li>
+        <li class="tab-pane">
+            <a href="#mail" data-toggle="tab">邮箱</a></li>
+        <li class="tab-pane">
+            <a href="#channel" data-toggle="tab">频道</a></li>
+        <li class="tab-pane">
+            <a href="#dspbs" data-toggle="tab">DSP-BS</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="union" class="tab-pane active" >
+            <div id="column-1" class="column form-column main span9 form-horizontal ui-sortable">
+                <div class="box well fieldset" id="box-11">
+                    <h4 class="box-title">
+                        <!--i class="icon icon-chevron-up chevron"></i-->
+                        新环境-测试任务
+                    </h4>
+                    <div class="box-content ">
+                        <form action="" method="post" name="form1">
+                            <div  class="control-group">
+                                <label for="txtUnionImprSvn" class="control-label ">
+                                    展示服务svn地址
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls">
+                                    <input class="text-field admintextinputwidget" id="txtUnionImprSvn" maxlength="128" name="UnionImprSvn" type="text">
+                                    <span class="text-error" style="display:none" id="NewUnionErrorInfo">This field is required.</span>
+                                </div>
+                            </div>
+                            <div  class="control-group">
+                                <label for="txtUnionResinSvn" class="control-label ">
+                                    resin svn地址
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls">
+                                    <input class="textinput textInput" id="txtUnionResinSvn" name="UnionResinSvn" type="text">
+                                </div>
+                            </div>
+                            <div  class="control-group">
+                                <label class="control-label requiredField">
+                                    选择测试用例
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls">
+                                    <select class="selectpicker" name="testcase" id="txtUnionTestsuit">
+                                        {% if taskcases_union_sum%}
+                                            <option >全部</option>
+                                        {% else%}
+                                            <option>无测试用例</option>
+                                        {% endif %}
+                                        {% for testcase in taskcases_union%}
+                                            <option>{{testcase.Testsuit_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    &nbsp;
+
+                                    <input type="button" value="开始测试" data-complete-text="测试完成" data-loading-text="测试进行中"class="default btn btn-primary" tag="Union" group="newtest" name="Union_newtest_execute">
+                                    {% if errors%}
+                                        <script>alert({{errors}})</script>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </form>
+                        <div  class="control-group">
+                            <label for="txtUnionStartNewTestLog" class="control-label requiredField">
+                                Log
+                            </label>
+                            <div class="controls" id = "divUnionStartNewTestLog">
+                                <textarea class="textarea-field admintextareawidget"  cols="40" id="txtUnionStartNewTestLog" name="description" rows="10">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <div class="controls">
+                                    <input type="button" value="查看报告" class="btn" tag="Union" group="report" name="_checkout"  id="NewUnionResult">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box well fieldset" id="box-12">
+                    <h4 class="box-title">
+                        已有环境-测试任务
+                    </h4>
+                    <div class="box-content ">
+                        <div  class="control-group">
+                            <label class="control-label requiredField">
+                                选择已有测试环境
+                            </label>
+                            <div class="controls">
+                                <select class="selectpicker" name="taskenv" id="txtUnionEnv">
+                                    <!--下拉框类别控件 -->
+                                    <optgroup label="联盟">
+                                        {% if EVN_union%}
+                                            {% for evn_union in EVN_union%}
+                                                <option value="{{evn_union.ENV_ID}}">{{evn_union.TIME}}-{{evn_union.IMPR_SVN}}-{{evn_union.RESIN_PORT}}</option>
+                                            {% endfor %}
+                                        {% else%}
+                                            <option>该平台无可用环境</option>
+                                        {% endif %}
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label class="control-label requiredField">
+                                选择测试用例
+                            </label>
+                            <div class="controls">
+                                <select class="selectpicker" name="testcase" id="txtUnionTestsuit2">
+                                    {% if taskcases_union_sum%}
+                                        <option>全部</option>
+                                    {% else%}
+                                        <option>无测试用例</option>
+                                    {% endif %}
+                                    {% for testcase in taskcases_union%}
+                                        <option>{{testcase.Testsuit_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                &nbsp;
+
+                                <input type="button" value="开始测试" data-complete-text="测试完成" data-loading-text="测试进行中" class="default btn btn-primary" tag="Union" group="oldtest" name="Union_oldtest_execute">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label for="txtUnionStartOldTestLog" class="control-label requiredField">
+                                Log
+                            </label>
+                            <div class="controls">
+                                <textarea class="textarea-field admintextareawidget" cols="40" id="txtUnionStartOldTestLog" name="description" rows="10">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <div class="controls">
+                                <input type="submit" value="查看报告" class="btn" name="_checkout" id="OldUnionResult" tag="Union">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="dict" class="tab-pane ">
+            <div id="column-2" class="column form-column main span9 form-horizontal ui-sortable">
+                <div class="box well fieldset" id="box-21">
+                    <h4 class="box-title">
+                        新环境-测试任务
+                    </h4>
+                    <div class="box-content ">
+                        <div  class="control-group">
+                            <label for="txtDictImprSvn" class="control-label ">
+                                展示服务svn地址
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <div class="controls">
+                                <input class="text-field admintextinputwidget" id="txtDictImprSvn" maxlength="128" name="DictImprSvn" type="text">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label for="txtDictResinSvn" class="control-label ">
+                                resin svn地址
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <div class="controls">
+                                <input class="textinput textInput" id="txtDictResinSvn" name="DictResinSvn" type="text">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label class="control-label requiredField">
+                                选择测试用例
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <div class="controls">
+                                <select class="selectpicker" id="txtDictTestsuit">
+                                    {% if taskcases_dict_sum%}
+                                        <option>全部</option>
+                                    {% else%}
+                                        <option>无测试用例</option>
+                                    {% endif %}
+                                    {% for testcase in taskcases_dict%}
+                                        <option>{{testcase.Testsuit_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                &nbsp;
+
+                                <input type="button" value="开始测试" data-complete-text="测试完成" data-loading-text="测试进行中" class="default btn btn-primary" tag="Dict" group="newtest" name="Dict_newtest_execute">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label for="txtDictStartNewTestLog" class="control-label requiredField">
+                                Log
+                            </label>
+                            <div class="controls">
+                                <textarea class="textarea-field admintextareawidget" cols="40" id="txtDictStartNewTestLog" name="description" rows="10">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <div class="controls">
+                                <input type="submit" value="查看报告" class="btn" name="_checkout" id="NewDictResult" tag="Dict">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box well fieldset" id="box-22">
+                    <h4 class="box-title">
+                        已有环境-测试任务
+                    </h4>
+                    <div class="box-content ">
+                        <div  class="control-group">
+                            <label class="control-label requiredField">
+                                选择已有测试环境
+                            </label>
+                            <div class="controls">
+                                <select class="selectpicker" id="txtDictEnv">
+                                    <!--下拉框类别控件 -->
+                                    <optgroup label="词典">
+                                        {% if EVN_dict%}
+                                            {% for evn_dict in EVN_dict%}
+                                                <option value="{{evn_dict.ENV_ID}}">{{evn_dict.TIME}}-{{evn_dict.IMPR_SVN}}-{{evn_dict.RESIN_PORT}}</option>
+                                            {% endfor %}
+                                        {% else%}
+                                            <option>该平台无可用环境</option>
+                                        {% endif %}
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label class="control-label requiredField">
+                                选择测试用例
+                            </label>
+                            <div class="controls">
+                                <select class="selectpicker" id="txtDictTestsuit2">
+                                    {% if taskcases_dict_sum%}
+                                        <option>全部</option>
+                                    {% else%}
+                                        <option>无测试用例</option>
+                                    {% endif %}
+                                    {% for testcase in taskcases_dict%}
+                                        <option>{{testcase.Testsuit_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                &nbsp;
+
+                                <input type="button" value="开始测试" data-complete-text="测试完成" data-loading-text="测试进行中" class="default btn btn-primary" tag="Dict" group="oldtest" name="Dict_oldtest_execute">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label for="txtDictStartOldTestLog" class="control-label requiredField">
+                                Log
+                            </label>
+                            <div class="controls">
+                                <textarea class="textarea-field admintextareawidget" cols="40" id="txtDictStartOldTestLog" name="description" rows="10">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <div class="controls">
+                                <input type="submit" value="查看报告" class="btn" name="_checkout" id="OldDictResult" tag="Dict">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="mail" class="tab-pane">
+            <div id="column-3" class="column form-column main span9 form-horizontal ui-sortable">
+                <div class="box well fieldset" id="box-31">
+                    <h4 class="box-title">
+                        新环境-测试任务
+                    </h4>
+                    <div class="box-content ">
+                        <div  class="control-group">
+                            <label for="txtMailImprSvn" class="control-label ">
+                                展示服务svn地址
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <div class="controls">
+                                <input class="text-field admintextinputwidget" id="txtMailImprSvn" maxlength="128" name="MailImprSvn" type="text">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label for="txtMailResinSvn" class="control-label ">
+                                resin svn地址
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <div class="controls">
+                                <input class="textinput textInput" id="txtMailResinSvn" name="MailResinSvn" type="text">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label class="control-label requiredField">
+                                选择测试用例
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <div class="controls">
+                                <select class="selectpicker" id="txtMailTestsuit">
+                                    {% if taskcases_mail_sum%}
+                                        <option>全部</option>
+                                    {% else%}
+                                        <option>无测试用例</option>
+                                    {% endif %}
+                                    {% for testcase in taskcases_mail%}
+                                        <option>{{testcase.Testsuit_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                &nbsp;
+
+                                <input type="button" value="开始测试" data-complete-text="测试完成" data-loading-text="测试进行中" class="default btn btn-primary" tag="Mail" group="newtest" name="Mail_newtest_execute">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label for="txtMailStartNewTestLog" class="control-label requiredField">
+                                Log
+                            </label>
+                            <div class="controls">
+                                <textarea class="textarea-field admintextareawidget" cols="40" id="txtMailStartNewTestLog" name="description" rows="10">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <div class="controls">
+                                <input type="submit" value="查看报告" class="btn" name="_checkout" id="NewMailResult" tag="Mail">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box well fieldset" id="box-32">
+                    <h4 class="box-title">
+                        已有环境-测试任务
+                    </h4>
+                    <div class="box-content ">
+                        <div  class="control-group">
+                            <label class="control-label requiredField">
+                                选择已有测试环境
+                            </label>
+                            <div class="controls">
+                                <select class="selectpicker" id="txtMailEnv">
+                                    <!--下拉框类别控件 -->
+                                    <optgroup label="邮箱">
+                                        {% if EVN_mail%}
+                                            {% for evn_mail in EVN_mail%}
+                                                <option value="{{evn_mail.ENV_ID}}">{{evn_mail.TIME}}-{{evn_mail.IMPR_SVN}}-{{evn_mail.RESIN_PORT}}</option>
+                                            {% endfor %}
+                                        {% else%}
+                                            <option>该平台无可用环境</option>
+                                        {% endif %}
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label class="control-label requiredField">
+                                选择测试用例
+                            </label>
+                            <div class="controls">
+                                <select class="selectpicker" id="txtMailTestsuit2">
+                                    {% if taskcases_mail_sum%}
+                                        <option>全部</option>
+                                    {% else%}
+                                        <option>无测试用例</option>
+                                    {% endif %}
+                                    {% for testcase in taskcases_mail%}
+                                        <option>{{testcase.Testsuit_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                &nbsp;
+
+                                <input type="button" value="开始测试" data-complete-text="测试完成" data-loading-text="测试进行中" class="default btn btn-primary" tag="Mail" group="oldtest" name="Mail_oldtest_execute">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label for="txtMailStartOldTestLog" class="control-label requiredField">
+                                Log
+                            </label>
+                            <div class="controls">
+                                <textarea class="textarea-field admintextareawidget" cols="40" id="txtMailStartOldTestLog" name="description" rows="10">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <div class="controls">
+                                <input type="submit" value="查看报告" class="btn" name="_checkout" id="OldMailResult" tag="Mail">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="channel" class="tab-pane">
+            <div id="column-4" class="column form-column main span9 form-horizontal ui-sortable">
+                <div class="box well fieldset" id="box-41">
+                    <h4 class="box-title">
+                        新环境-测试任务
+                    </h4>
+                    <div class="box-content ">
+                        <div  class="control-group">
+                            <label for="txtChannelImprSvn" class="control-label ">
+                                展示服务svn地址
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <div class="controls">
+                                <input class="text-field admintextinputwidget" id="txtChannelImprSvn" maxlength="128" name="ChannelImprSvn" type="text">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label for="txtChannelResinSvn" class="control-label ">
+                                resin svn地址
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <div class="controls">
+                                <input class="textinput textInput" id="txtChannelResinSvn" name="ChannelResinSvn" type="text">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label class="control-label requiredField">
+                                选择测试用例
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <div class="controls">
+                                <select class="selectpicker" id="txtChannelTestsuit">
+                                    {% if taskcases_channel_sum%}
+                                        <option>全部</option>
+                                    {% else%}
+                                        <option>无测试用例</option>
+                                    {% endif %}
+                                    {% for testcase in taskcases_channel%}
+                                        <option>{{testcase.Testsuit_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                &nbsp;
+
+                                <input type="button" value="开始测试" data-complete-text="测试完成" data-loading-text="测试进行中" class="default btn btn-primary" tag="Channel" group="newtest"  name="Channel_newtest_execute">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label for="txtChannelStartNewTestLog" class="control-label requiredField">
+                                Log
+                            </label>
+                            <div class="controls">
+                                <textarea class="textarea-field admintextareawidget" cols="40" id="txtChannelStartNewTestLog" name="description" rows="10">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <div class="controls">
+                                <input type="button" value="查看报告" class="btn" name="_checkout" id="NewChannelResult" tag="Channel">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box well fieldset" id="box-42">
+                    <h4 class="box-title">
+                        已有环境-测试任务
+                    </h4>
+                    <div class="box-content ">
+                        <div  class="control-group">
+                            <label class="control-label requiredField">
+                                选择已有测试环境
+                            </label>
+                            <div class="controls">
+                                <select class="selectpicker" id="txtChannelEnv">
+                                    <!--下拉框类别控件 -->
+                                    <optgroup label="频道">
+                                        {% if EVN_channel%}
+                                            {% for evn_channel in EVN_channel%}
+                                                <option value="{{evn_channel.ENV_ID}}">{{evn_channel.TIME}}-{{evn_channel.IMPR_SVN}}-{{evn_channel.RESIN_PORT}}</option>
+                                            {% endfor %}
+                                        {% else%}
+                                            <option>该平台无可用环境</option>
+                                        {% endif %}
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label class="control-label requiredField">
+                                选择测试用例
+                            </label>
+                            <div class="controls">
+                                <select class="selectpicker" id="txtChannelTestsuit2">
+                                    {% if taskcases_channel_sum%}
+                                        <option>全部</option>
+                                    {% else%}
+                                        <option>无测试用例</option>
+                                    {% endif %}
+                                    {% for testcase in taskcases_channel%}
+                                        <option>{{testcase.Testsuit_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                &nbsp;
+
+                                <input type="button" value="开始测试" data-complete-text="测试完成" data-loading-text="测试进行中" class="default btn btn-primary" tag="Channel" group="oldtest" name="Channel_oldtest_execute">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label for="txtChanelStartOldTestLog" class="control-label requiredField">
+                                Log
+                            </label>
+                            <div class="controls">
+                                <textarea class="textarea-field admintextareawidget" cols="40" id="txtChanelStartOldTestLog" name="description" rows="10">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <div class="controls">
+                                <input type="submit" value="查看报告" class="btn" name="_checkout" id="OldChannelResult" tag="Channel">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="dspbs" class="tab-pane">
+            <div id="column-5" class="column form-column main span9 form-horizontal ui-sortable">
+                <div class="box well fieldset" id="box-51">
+                    <h4 class="box-title">
+                        新环境-测试任务
+                    </h4>
+                    <div class="box-content ">
+                        <div  class="control-group">
+                            <label for="txtDspbsImprSvn" class="control-label ">
+                                服务svn地址
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <div class="controls">
+                                <input class="text-field admintextinputwidget" id="txtDspbsImprSvn" maxlength="128" name="DspbsImprSvn" type="text">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label class="control-label requiredField">
+                                选择测试用例
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <div class="controls">
+                                <select class="selectpicker" id="txtDspbsTestsuit">
+                                    {% if taskcases_dsp_sum%}
+                                        <option>全部</option>
+                                    {% else%}
+                                        <option>无测试用例</option>
+                                    {% endif %}
+                                    {% for testcase in taskcases_dsp%}
+                                        <option>{{testcase.Testsuit_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                &nbsp;
+
+                                <input type="button" value="开始测试" data-complete-text="测试完成" data-loading-text="测试进行中" class="default btn btn-primary" tag="Dspbs" group="newtest" name="Dspbs_newtest_execute">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label for="txtDspbsStartNewTestLog" class="control-label requiredField">
+                                Log
+                            </label>
+                            <div class="controls">
+                                <textarea class="textarea-field admintextareawidget" cols="40" id="txtDspbsStartNewTestLog" name="description" rows="10">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <div class="controls">
+                                <input type="button" value="查看报告" class="btn" name="_checkout" id="NewDspbsResult" tag="Dspbs">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box well fieldset" id="box-2">
+                    <h4 class="box-title">
+                        已有环境-测试任务
+                    </h4>
+                    <div class="box-content ">
+                        <div  class="control-group">
+                            <label class="control-label requiredField">
+                                选择已有测试环境
+                            </label>
+                            <div class="controls">
+                                <select class="selectpicker" id="txtDspbsEnv">
+                                    <!--下拉框类别控件 -->
+                                    <optgroup label="dspbs">
+                                        {% if EVN_dsp%}
+                                            {% for evn_dsp in EVN_dsp%}
+                                                <option value="{{evn_dsp.ENV_ID}}">{{evn_dsp.TIME}}-{{evn_dsp.IMPR_SVN}}-{{evn_dsp.RESIN_PORT}}</option>
+                                            {% endfor %}
+                                        {% else%}
+                                            <option>该平台无可用环境</option>
+                                        {% endif %}
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label class="control-label requiredField">
+                                选择测试用例
+                            </label>
+                            <div class="controls">
+                                <select class="selectpicker" id="txtDspbsTestsuit2">
+                                    {% if taskcases_dsp_sum%}
+                                        <option>全部</option>
+                                    {% else%}
+                                        <option>无测试用例</option>
+                                    {% endif %}
+                                    {% for testcase in taskcases_dsp%}
+                                        <option>{{testcase.Testsuit_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                &nbsp;
+
+                                <input type="button" value="开始测试" data-complete-text="测试完成" data-loading-text="测试进行中" class="default btn btn-primary" tag="Dspbs" group="oldtest" name="Dspbs_oldtest_execute">
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <label for="txtDspbsStartOldTestLog" class="control-label requiredField">
+                                Log
+                            </label>
+                            <div class="controls">
+                                <textarea class="textarea-field admintextareawidget" cols="40" id="txtDspbsStartOldTestLog" name="description" rows="10">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div  class="control-group">
+                            <div class="controls">
+                                <input type="submit" value="查看报告" class="btn" name="_checkout" id="OldDspbsResult" tag="Dspbs">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </form>
+
+
+{% endblock %}
+
+{% block script  %}
+    <script src="{% get_static_prefix %}js/newtask.js" ></script>
+{% endblock %}

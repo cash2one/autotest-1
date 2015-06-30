@@ -1,0 +1,22 @@
+{% extends "base.html" %}	
+{% block content %}
+    <!--div id="login-panel" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"-->    
+        <div class="modal-header">
+               <h3 id="myModalTitle">用户登录</h3>
+        </div>
+        <div class="modal-body">
+               <table id="user_input_table">
+                   <tr>
+                         <td>用户名:</td>
+                         <td><input type="text" name="userName"></input></td>
+                   </tr>
+                   <tr>
+                         <td>密码:</td>
+                         <td><input type="password" name="passwd"></input></td>
+                   </tr>
+               </table>
+        </div>
+        <!--div class="modal-footer"-->
+        <button class="btn btn-primary" id="login">登录</button>
+        <!--/div-->
+{% endblock %}	

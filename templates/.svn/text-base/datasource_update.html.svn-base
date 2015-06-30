@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load platFilter %}
+
+{% load static %}
+
+{% block content %}
+
+      <div class="navbar">
+          <div class="navbar-inner">
+              <a class="brand" href="#">
+                  <i class="icon-user"><sub class="icon-pencil"></sub></i>
+                  XmlName
+              </a>
+          </div>
+      </div>
+
+      <div class="tab-content">
+          <div id="union" class="tab-pane active" >
+            <div id="column-1" class="column form-column main span9 form-horizontal ui-sortable">
+                <div class="box well fieldset" id="box-11">
+                    <h4 class="box-title">
+                        Edit
+                    </h4>
+                    <div class="box-content ">
+                        <form action="" method="post" name="update_form">
+                            <div  class="control-group" >
+                                <label for="XmlName" class="control-label ">
+                                    XmlName
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls">
+                                    <input class="text-field admintextinputwidget" id="XmlName" maxlength="128" name="XmlName" type="text" value="{{Datasource.name}}">
+                                    <span class="text-error" style="display:none" id="XmlNameErrorInfo">This field is required.</span>
+                                </div>
+                            </div>
+                            <div  class="control-group">
+                                <label for="XmlContent" class="control-label requiredField">
+                                    XmlContent
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls" id = "XmlContent_div">
+                                    <textarea class="textarea-field admintextareawidget"  cols="40" id="XmlContent" name="description" rows="20" >{{Datasource.content}}
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div  class="control-group">
+                                <label for="XmlType" class="control-label ">
+                                    XmlType
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls clearfix">
+                                  {%if Datasource.type%}
+                                  <label for="XmlType_0" class="radio radio-inline adminradioselect form-control">
+                                    <input class="radio-inline adminradioselect form-control" id="XmlType_0" name="type" type="radio" value="0"> 模板
+                                  </label>
+                                  <label for="XmlType_1" class="radio radio-inline adminradioselect form-control">
+                                    <input  checked="checked" class="radio-inline adminradioselect form-control" id="XmlType_1" name="type" type="radio" value="1">普通
+                                  </label>
+                                  {% else %}
+                                    <label for="XmlType_0" class="radio radio-inline adminradioselect form-control">
+                                    <input checked="checked" class="radio-inline adminradioselect form-control" id="XmlType_0" name="type" type="radio" value="0"> 模板
+                                  </label>
+                                  <label for="XmlType_1" class="radio radio-inline adminradioselect form-control">
+                                    <input  class="radio-inline adminradioselect form-control" id="XmlType_1" name="type" type="radio" value="1">普通
+                                  </label>
+                                  {% endif %}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+      <div class="form-actions well well-sm clearfix ">
+          <button type="submit" class="default btn btn-primary hide-xs span1" name="_save" data-loading-text="Saving.." id="datasource_update">
+            <i class="icon-save"></i> Save
+          </button>
+          <a href="#myModal" data-toggle="modal" class="btn btn-danger deletelink pull-right hide-xs " ><i class="icon-trash"></i> Delete</a>
+          <!-- Modal -->
+          <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Confirmation</h3>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to delete the XmlName.xml?</p>
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true" id="delete_yes">Yes</button>
+              <button class="btn btn-primary" id="delete_no" data-dismiss="modal">No</button>
+            </div>
+          </div>
+        </div>
+       
+    
+{% endblock %}
+
+
+{% block script  %}
+    <!--script src="{% get_static_prefix %}js/newtask.js" ></script-->
+    <script src="{% get_static_prefix %}js/datasourceEdit.js" ></script>
+{% endblock %}

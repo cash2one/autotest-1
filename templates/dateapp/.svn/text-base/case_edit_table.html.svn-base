@@ -1,0 +1,114 @@
+             <div class="bs-docs-example">
+                  <div id="example"></div>
+                      <script type='text/javascript'>
+                         var options = {
+                            currentPage: {{pageNum}},
+                            totalPages: {{totalPage}},
+                            numberOfPages:5,
+                            onPageChanged: function(e,oldPage,newPage) {
+                                  platformId = $("#platformId").val()
+                                  $.get("../case_edit",
+                                   {
+                                     pageNum:newPage,
+                                     platformId:platformId
+                                   },function(data){
+                                      $("div#caseTable").html(data)
+                                      $("div#myTabContent").empty()
+                                  } //end of function
+                                  ) //end of get 
+                            }
+                         }
+
+                         $('#example').bootstrapPaginator(options);
+                      </script><span style="font-family:'sans serif, tahoma, verdana, helvetica';"><span style="white-space:normal;"> </span></span>
+             </div>
+                    <table class="table table-bordered table-striped table-condensed  table-hover" id="caseEditTable" width="50%">
+                      <input type="hidden" id="platformId" value="{{platformId}}" />  
+                     <thead>
+                            <tr>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <input type="checkbox" id="control-all" onclick="checkAll()"></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >测试用例说明 </a></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >测试集ID </a></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >测试集名称 </a></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >数据源文件 </a></div>
+                                </th>
+                                <th scope="col" class="sortable"> 
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >命令 </a></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >参数 </a></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >匹配类型 </a></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >期望结果 </a></div>
+                                </th>
+                                <th scope="col" class="sortable">
+                                    <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >日志路径 </a></div>
+                                </th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        {% for case in testCase  %}
+                        <tr name="{{case.id}}">
+                            <td><input type="checkbox" onclick="clickCb()"/></td>
+                            <td><input type="text" class="input-small" value="{{case.case_name}}"/><!--textarea rows="2" cols="10"/--></td>
+                            <td><input type="text" class="input-small" value="{{case.testsuitID}}"/><!--textarea rows="3" cols="10"/--></td>
+                            <td><input type="text" class="input-small" value="{{case.Testsuit_name}}"/><!--textarea rows="3" cols="10"/--></td>
+                            <td>
+                                <select class="selectpicker">
+                                            {% for xml in xmlFile %}
+                                                {% ifequal case.xml_file.name xml.name %}
+                                                     <option selected="true">{{xml.name}} </option>
+                                                {% else %}
+                                                     <option>{{xml.name}} </option>
+                                                {% endifequal %}
+                                            {% endfor%}
+                                 </select>
+                            </td>
+                            <td><input type="text" class="input-small" value="{{case.command}}"/><!--textarea rows="3" cols="10"/--></td>
+                            <td><input type="text" class="input-small" value="{{case.parameter}}"/><!--textarea rows="3" cols="10"/--></td>
+                            <td><input type="text" class="input-small" value="{{case.matchtype}}"/><!--textarea rows="3" cols="10"/--></td>
+                            <td><input type="text" class="input-small" value="{{case.Expresult}}"/><!--textarea rows="3" cols="1" value="{{case.Expresult}}"/--></td>
+                            <td><input type="text" class="input-small" value="{{case.Log_path}}"/><!--textarea rows="3" cols="10"/--></td>
+                        </tr>
+                        {% endfor%}
+                    </tbody>
+</table>
+                 <div id="viewXmlFile" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModelLabel" aria-hidden="true">
+                      <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                          <h3>数据源文件列表</h3>
+                      </div>
+                      <div class="modal-body">
+                          <table border="1" width="100%">
+                             <tr>
+                               <th><strong>文件名称:</strong></th>
+                               <th><strong>类型：</strong></th>
+                             </tr>
+                             {% for xml in xmlFile %}
+                                <tr>
+                                     <td>{{xml.name}}</td>
+                                     {% ifequal xml.type 1%}
+                                          <td>模版文件</td>
+                                     {% else %} 
+                                          <td>普通文件</td>
+                                     {% endifequal %} 
+                                </tr>
+                             {% endfor%}
+                          </table>
+                      </div>
+                      <div class="modal-footer">
+                          <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+                      </div>
+                  </div>

@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load platFilter %}
+
+{% load static %}
+{% block content %}
+<script src="{% get_static_prefix %}js/caseEdit.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/jquery.min.js" type="text/javascript"></script>
+<script src="{% get_static_prefix %}js/jquery-ui.min.js" type="text/javascript"></script>
+<link href="{% get_static_prefix %}css/bootstrap-select.css" media="screen" type="text/css" rel="stylesheet" charset="utf-8">
+<script src="{% get_static_prefix %}js/bootstrap-select.js" type="text/javascript"></script>
+      <div class="navbar">
+          <div class="navbar-inner">
+              <a class="brand" href="#">
+                  <i class="icon-user"><sub class="icon-pencil"></sub></i>
+                  测试用例编辑
+              </a>
+          </div>
+      </div>
+
+      <div class="tab-content">
+          <div id="union" class="tab-pane active" >
+            <div id="column-1" class="column form-column main span9 form-horizontal ui-sortable">
+                <div class="box well fieldset" id="box-11">
+                    <h4 class="box-title">
+                        Edit
+                    </h4>
+                    <div class="box-content ">
+                        <form action="" method="post" name="update_form">
+                            <div  class="control-group" >
+                                <label for="CaseName" class="control-label ">
+                                    测试用例ID
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls">
+                                    <input class="text-field admintextinputwidget" id="CaseName" maxlength="128" name="CaseName" type="text" value="{{case.case_name}}">
+                                    <input type="hidden" id="CaseId" value="{{case.id}}" />
+                                    <input type="hidden" id="platformId" value="{{platformId}}" />
+                                    <span class="text-error" style="display:none" id="CaseNameErrorInfo">This field is required.</span>
+                                </div>
+                            </div>
+                            <div  class="control-group">
+                                <label for="SuiteId" class="control-label requiredField">
+                                    测试集ID
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls" id = "SuiteId_div">
+                                    <input class="text-field admintextareawidget"  id="SuiteId" name="description" type="text" value="{{case.testsuitID}}">
+                                </div>
+                            </div>
+                            <div  class="control-group">
+                                <label for="SuiteName" class="control-label ">
+                                    测试集名称
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls" id = "SuiteName_div">
+                                    <input type="text" class="text-field admintextinputwidget" id="SuiteName" value="{{case.Testsuit_name}}">
+                                </div>
+                            </div>
+                            <div  class="control-group">
+                                <label for="XmlFile" class="control-label ">
+                                    Xml文件
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls" id = "XmlFile_div">
+                                     <select class="selectpicker" id="XmlFile">
+                                      {% for xml in xmlFile %}
+                                          {% ifequal case.xml_file.name xml.name %}
+                                              <option selected="true">{{xml.name}} </option>
+                                          {% else %}
+                                              <option>{{xml.name}} </option>
+                                          {% endifequal %}
+                                      {% endfor%}
+                                   </select>
+                                </div>
+                            </div>
+                            <div  class="control-group">
+                                <label for="caseCommand" class="control-label ">
+                                    命令
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls" id = "caseCommand_div">
+                                    <input class="text-field admintextareawidget"  id="CaseCommand" name="description" type="text" value="{{case.command}}">
+                                </div>
+                            </div>
+                            <div  class="control-group">
+                                <label for="casePara" class="control-label ">
+                                    参数
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls" id = "casePara_div">
+                                    <input class="text-field admintextareawidget"  id="CasePara" name="description" type="text" value="{{case.parameter}}">
+                                </div>
+                            </div>
+                            <div  class="control-group">
+                                <label for="caseMatchType" class="control-label ">
+                                    匹配类型
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls" id = "caseMatchType_div">
+                                  <select class="selectpicker" id="XmlName">
+                                       {% for type in matchTypeList %}
+                                          {% ifequal  case.matchtype type%}
+                                              <option selected="true">{{type}} </option>
+                                          {% else %}
+                                              <option>{{type}} </option>
+                                          {% endifequal %}
+                                       {% endfor %}
+                                   </select>
+                                </div>
+                            </div>
+                            <div  class="control-group">
+                                <label for="expect" class="control-label ">
+                                    期望结果
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls" id = "expect_div">
+                                    <textarea class="textarea-field admintextareawidget" cols="40" rows="3" id="expect" name="description" type="text">{{case.Expresult}}</textarea>
+                                </div>
+                            </div>
+                            <div  class="control-group">
+                                <label for="log" class="control-label ">
+                                    日志
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls" id = "log_div">
+                                  <select class="selectpicker" id="log">
+                                       {% for type in logTypeList %}
+                                          {% ifequal  case.Log_path type%}
+                                              <option selected="true">{{type}} </option>
+                                          {% else %}
+                                              <option>{{type}} </option>
+                                          {% endifequal %}
+                                       {% endfor %}
+                                   </select>
+                                </div>
+                            </div>
+                            <div  class="control-group">
+                                <label for="CaseDetail" class="control-label ">
+                                    用例说明
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="controls" id = "CaseDetail_div">
+                                    <input class="text-field admintextareawidget"  id="CaseDetail" name="description" type="text" value="{{case.Detail}}">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions well well-sm clearfix ">
+          <button type="submit" class="default btn btn-primary hide-xs span1" name="_save" data-loading-text="Saving.." id="save">
+            <i class="icon-save"></i> Save </button>
+          <!--a class="btn pull-right btn-primary" href="../case_info?platformId={{platformId}}">Back</a-->
+          <a class="btn pull-right btn-primary" href="javascript:history.back(-1)">Back</a>
+        </div>
+       
+    
+{% endblock %}
+

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load platFilter %}
+
+{% block content %}
+   <legend><i class="icon-wrench"></i>我的测试环境</legend>
+   <div class="bs-docs-example">
+            <ul id="myTab" class="nav nav-tabs">
+              <li class="active"><a href="#envTab" data-toggle="tab" name="1">线下直销</a></li>
+              <li><a href="#envTab" data-toggle="tab" name="2">词典</a></li>
+              <li><a href="#envTab" data-toggle="tab" name="5">DSP</a></li>
+              <li><a href="#envTab" data-toggle="tab" name="7">转化跟踪前端</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+              <div class="tab-pane fade in active" id="offline">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="sortable">
+                            <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >时间 </a></div>
+                        </th>
+                        <th scope="col" class="sortable">
+                            <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >代码版本 </a></div>
+                        </th>
+                        <th scope="col" class="sortable">
+                            <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >状态 </a></div>
+                        </th>
+                        <th scope="col" class="sortable"> 
+                            <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >操作 </a></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for env in envList  %}
+                        <tr>
+                            <td>{{env.TIME}}</td>
+                            <td>{{env.IMPR_SVN}}</td>
+                            <td>{{env_status|key:env.STATUS}}</td>
+                            <td>
+                            {% if env_status|delete:env.STATUS %}
+                                <a href="#deleteEnv" name="{{env.ENV_ID}}"><i class="icon-trash">删除</i></a>
+                            {% endif %}
+                            {% if env_status|start:env.STATUS%}
+                                <a href="#startEnv" name="{{env.ENV_ID}}"><i class="icon-play">启动</i></a>
+                            {% endif %}
+                            {% if env_status|stop:env.STATUS%}                                
+                                <a href="#stopEnv" name="{{env.ENV_ID}}"><i class="icon-pause">停止</i></a>
+                            {% endif%}
+                            </td>
+                        </tr>
+                        {% endfor%}
+                    </tbody>
+                    </table>
+                 </div> 
+            </div>
+            <div id="envTable">
+            </div>
+   </div>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+{% endblock%}
+
+    {% block breadcrumbs %}
+        <ul class="breadcrumb">
+        <li><a href="">{% trans 'Home' %}</a>
+            <span class="divider">/</span>
+        <li>
+        <li class="active">new_task</li>
+        </ul>
+    
+
+    
+    {% endblock %}

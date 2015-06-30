@@ -1,0 +1,52 @@
+8
+
+dir
+509547
+https://dev.corp.youdao.com/svn/outfox/incubator/Test/EAD/XmlAutomation/autotest/pagination/templatetags
+https://dev.corp.youdao.com/svn/outfox
+
+
+
+2013-09-27T13:03:25.183393Z
+489786
+zhangyi
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+36a6777f-fe3c-0410-890b-904d6044f29d
+
+__init__.py
+file
+
+
+
+
+2013-09-27T13:03:51.000000Z
+68b329da9893e34099c7d8ad5cb9c940
+2013-09-27T13:03:25.183393Z
+489786
+zhangyi
+
+pagination_tags.py
+file
+
+
+
+
+2013-09-27T13:03:51.000000Z
+c2d38f78f1bc51a19d1a9a92388c8c96
+2013-09-27T13:03:25.183393Z
+489786
+zhangyi
+

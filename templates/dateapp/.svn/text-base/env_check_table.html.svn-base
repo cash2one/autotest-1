@@ -1,0 +1,41 @@
+{% load static %}
+{% load platFilter %}
+<script src="{% get_static_prefix %}js/login.js" type="text/javascript"></script>
+                    <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="sortable">
+                            <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >时间 </a></div>
+                        </th>
+                        <th scope="col" class="sortable">
+                            <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >代码版本 </a></div>
+                        </th>
+                        <th scope="col" class="sortable">
+                            <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >状态 </a></div>
+                        </th>
+                        <th scope="col" class="sortable"> 
+                            <div class="dropdown pull-left"> <a class="dropdown-toggle" data-toggle="dropdown" >操作 </a></div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for env in envList  %}
+                        <tr>
+                            <td>{{env.TIME}}</td>
+                            <td>{{env.IMPR_SVN}}</td>
+                            <td>{{env_status|key:env.STATUS}}</td>
+                            <td>
+                            {% if env_status|delete:env.STATUS %}
+                                <a href="#deleteEnv" name="{{env.ENV_ID}}"><i class="icon-trash">删除</i></a>
+                            {% endif %}
+                            {% if env_status|start:env.STATUS%}
+                                <a href="#startEnv" name="{{env.ENV_ID}}"><i class="icon-play">启动</i></a>
+                            {% endif %}
+                            {% if env_status|stop:env.STATUS%}                                
+                                <a href="#stopEnv" name="{{env.ENV_ID}}"><i class="icon-pause">停止</i></a>
+                            {% endif%}
+                            </td>
+                        </tr>
+                        {% endfor%}
+                    </tbody>
+                    </table>

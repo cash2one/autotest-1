@@ -1,0 +1,70 @@
+8
+
+dir
+509547
+https://dev.corp.youdao.com/svn/outfox/incubator/Test/EAD/XmlAutomation/autotest/templates
+https://dev.corp.youdao.com/svn/outfox
+
+
+
+2014-01-10T07:26:57.755969Z
+509546
+zhangyi
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+36a6777f-fe3c-0410-890b-904d6044f29d
+
+datasource_update.html
+file
+
+
+
+
+2013-12-09T06:10:19.000000Z
+e2020d87ba13f33eaaa53b72d6350dc8
+2013-12-09T06:10:11.194059Z
+502864
+zhangyi
+
+registration
+dir
+
+header.html
+file
+
+
+
+
+2013-09-04T10:39:11.000000Z
+bd99737f132b9d7264121f06dd483608
+2013-08-14T11:15:51.696967Z
+479894
+luqy
+
+base.html
+file
+
+
+
+
+2013-12-30T12:43:12.000000Z
+90d3d2239958974925fc7a9aa460fef3
+2013-12-30T12:42:57.642395Z
+507581
+zhangyi
+
+dateapp
+dir
+
