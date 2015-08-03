@@ -21,10 +21,10 @@ def login(request):
     referer = "index"
     if referer in request.META:
         referer = request.META['HTTP_REFERER']
-    ldap_host="soda.rd.netease.com"
+    ldap_host="soda.rd.xxx.com"
     ldap_port="389"
     ldap_path="ldap://" + ldap_host + ":" + ldap_port + "/";
-    baseDn="ou=people,dc=rd,dc=netease,dc=com"
+    baseDn="ou=people,dc=rd,dc=xxx,dc=com"
     username="uid=" + user + "," + baseDn
     try:   
             l = ldap.initialize(ldap_path)
