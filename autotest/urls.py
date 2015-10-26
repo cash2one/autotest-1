@@ -53,6 +53,7 @@ urlpatterns = patterns('',
     url(r'^read_log','main.taskNew.read_log',name='read_log'),
     url(r'^ead_online_version','main.onlineversion_info.onlineversion_info',name='onlineversion_info'),
     url(r'^add_product/$','main.onlineversion_info.add_product',name='add_product'),
+    url(r'^test/$','main.onlineversion_info.add_product',name='add_product'),#test jenkins
     
     
 )
